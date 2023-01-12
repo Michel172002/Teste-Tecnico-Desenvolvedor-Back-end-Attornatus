@@ -30,4 +30,9 @@ public class PessoaService {
         return pessoaRepository.findById(id);
     }
 
+    @Transactional
+    public void delete(PessoaModel pessoaModel){
+        pessoaRepository.delete(pessoaModel);
+    }
+
 }
