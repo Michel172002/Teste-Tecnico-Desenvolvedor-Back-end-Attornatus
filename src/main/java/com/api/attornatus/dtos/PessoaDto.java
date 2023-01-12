@@ -1,14 +1,17 @@
 package com.api.attornatus.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 public class PessoaDto {
 
     @NotBlank
     private String nome;
 
-    @NotBlank
-    private String nascimento;
+    @NotNull
+    private LocalDate nascimento;
 
     @NotBlank
     private String endereco;
@@ -21,11 +24,11 @@ public class PessoaDto {
         this.nome = nome;
     }
 
-    public String getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
     }
 
