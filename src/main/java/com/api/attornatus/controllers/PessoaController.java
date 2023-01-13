@@ -78,18 +78,6 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(enderecoPrincipal);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePessoa(@PathVariable(value = "id") UUID id){
-        Optional<PessoaModel> pessoaModelOptional = pessoaService.findById(id);
-
-        if(!pessoaModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada");
-        }
-
-        pessoaService.delete(pessoaModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Pessoa Deletada com Sucesso!");
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Object> updatePessoa(@PathVariable(value = "id") UUID id,
                                                @RequestBody @Valid PessoaDto pessoaDto){

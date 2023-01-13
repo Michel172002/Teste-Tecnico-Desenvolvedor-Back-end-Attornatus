@@ -40,10 +40,4 @@ public class EnderecoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(enderecoModel));
     }
-
-    @GetMapping
-    public ResponseEntity getAllEnderecos(){
-        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.findAll());
-    }
-
 }

@@ -1,6 +1,5 @@
 package com.api.attornatus.services;
 
-import com.api.attornatus.models.EnderecoModel;
 import com.api.attornatus.models.PessoaModel;
 import com.api.attornatus.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
@@ -29,11 +28,6 @@ public class PessoaService {
 
     public Optional<PessoaModel> findById(UUID id){
         return pessoaRepository.findById(id);
-    }
-
-    @Transactional
-    public void delete(PessoaModel pessoaModel){
-        pessoaRepository.delete(pessoaModel);
     }
 
 }
