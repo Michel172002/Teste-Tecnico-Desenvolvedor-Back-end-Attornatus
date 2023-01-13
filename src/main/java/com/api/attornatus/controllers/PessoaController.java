@@ -1,6 +1,7 @@
 package com.api.attornatus.controllers;
 
 import com.api.attornatus.dtos.PessoaDto;
+import com.api.attornatus.models.EnderecoModel;
 import com.api.attornatus.models.PessoaModel;
 import com.api.attornatus.services.PessoaService;
 import jakarta.validation.Valid;
@@ -45,6 +46,11 @@ public class PessoaController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(pessoaModelOptional.get());
+    }
+
+    @GetMapping("/{id}/enderecos")
+    public ResponseEntity<List<EnderecoModel>> getAllEnderecosPessoa(@PathVariable(value = "id") UUID pessoaId){
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.enderecosPessoa(pessoaId));
     }
 
     @DeleteMapping("/{id}")

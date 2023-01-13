@@ -1,5 +1,6 @@
 package com.api.attornatus.services;
 
+import com.api.attornatus.models.EnderecoModel;
 import com.api.attornatus.models.PessoaModel;
 import com.api.attornatus.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,11 @@ public class PessoaService {
 
     public Optional<PessoaModel> findById(UUID id){
         return pessoaRepository.findById(id);
+    }
+
+    public List<EnderecoModel> enderecosPessoa(UUID pessoaId){
+        var pessoaModel = pessoaRepository.findById(pessoaId);
+        return pessoaModel.get().getEnderecos();
     }
 
     @Transactional
