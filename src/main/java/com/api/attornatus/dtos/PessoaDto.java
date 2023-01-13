@@ -13,9 +13,6 @@ public class PessoaDto {
     @NotNull
     private LocalDate nascimento;
 
-    @NotBlank
-    private String endereco;
-
     public String getNome() {
         return nome;
     }
@@ -30,13 +27,5 @@ public class PessoaDto {
 
     public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 }

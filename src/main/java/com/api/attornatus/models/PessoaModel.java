@@ -1,9 +1,11 @@
 package com.api.attornatus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,8 +23,8 @@ public class PessoaModel implements Serializable {
     @Column(nullable = false)
     private LocalDate nascimento;
 
-    @Column(nullable = false)
-    private String endereco;
+    @OneToMany(mappedBy = "pessoa")
+    private List<EnderecoModel> enderecos;
 
     public UUID getId() {
         return id;
@@ -48,11 +50,11 @@ public class PessoaModel implements Serializable {
         this.nascimento = nascimento;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public List<EnderecoModel> getEnderecos() {
+        return enderecos;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setEnderecos(List<EnderecoModel> enderecos) {
+        this.enderecos = enderecos;
     }
 }
