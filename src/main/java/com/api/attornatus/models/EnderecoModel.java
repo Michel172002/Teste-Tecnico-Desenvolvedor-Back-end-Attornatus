@@ -79,8 +79,4 @@ public class EnderecoModel implements Serializable {
     public void setPessoa(PessoaModel pessoa) {
         this.pessoa = pessoa;
     }
-
-    public void vincularPessoa(PessoaModel pessoaModel) {
-        this.pessoa = pessoaModel;
-    }
 }

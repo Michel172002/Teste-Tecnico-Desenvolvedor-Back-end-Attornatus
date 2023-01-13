@@ -26,10 +26,17 @@ public class EnderecoController {
         this.pessoaService = pessoaService;
     }
 
-    @PostMapping
-    public ResponseEntity<Object> saveEndereco(@RequestBody @Valid EnderecoDto enderecoDto){
+    @PostMapping("/{pessoaId}")
+    public ResponseEntity<Object> saveEndereco(@RequestBody @Valid EnderecoDto enderecoDto,
+                                               @PathVariable(value = "pessoaId") UUID pessoaId){
+        Optional<PessoaModel> pessoaModelOptional = pessoaService.findById(pessoaId);
+        if (!pessoaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrado!");
+        }
+
         var enderecoModel = new EnderecoModel();
         BeanUtils.copyProperties(enderecoDto, enderecoModel);
+        enderecoModel.setPessoa(pessoaModelOptional.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(enderecoModel));
     }
@@ -39,20 +46,4 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.OK).body(enderecoService.findAll());
     }
 
-    @PutMapping("/{enderecoId}/pessoa/{pessoaId}")
-    public ResponseEntity<Object> addEnderecoPessoa(@PathVariable(name = "enderecoId") UUID enderecoId,
-                                                    @PathVariable(name = "pessoaId") UUID pessoaId){
-        Optional<PessoaModel> pessoaModelOptional = pessoaService.findById(pessoaId);
-        Optional<EnderecoModel> enderecoModelOptional = enderecoService.findById(enderecoId);
-        if (!pessoaModelOptional.isPresent() || !enderecoModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa ou Endereço não encontrado!");
-        }
-
-        var pessoaModel = pessoaModelOptional.get();
-        var enderecoModel = enderecoModelOptional.get();
-
-        enderecoModel.vincularPessoa(pessoaModel);
-
-        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.save(enderecoModel));
-    }
 }
