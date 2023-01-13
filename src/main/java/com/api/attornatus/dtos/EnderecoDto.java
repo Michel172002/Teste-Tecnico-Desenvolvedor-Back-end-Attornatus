@@ -1,6 +1,7 @@
 package com.api.attornatus.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class EnderecoDto {
 
@@ -15,6 +16,9 @@ public class EnderecoDto {
 
     @NotBlank
     private String cidade;
+
+    @NotNull
+    private Boolean principal;
 
     public String getLogradouro() {
         return logradouro;
@@ -48,4 +52,11 @@ public class EnderecoDto {
         this.cidade = cidade;
     }
 
+    public Boolean getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(Boolean principal) {
+        this.principal = principal;
+    }
 }

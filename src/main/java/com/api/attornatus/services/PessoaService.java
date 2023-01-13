@@ -31,11 +31,6 @@ public class PessoaService {
         return pessoaRepository.findById(id);
     }
 
-    public List<EnderecoModel> enderecosPessoa(UUID pessoaId){
-        var pessoaModel = pessoaRepository.findById(pessoaId);
-        return pessoaModel.get().getEnderecos();
-    }
-
     @Transactional
     public void delete(PessoaModel pessoaModel){
         pessoaRepository.delete(pessoaModel);

@@ -3,6 +3,7 @@ package com.api.attornatus.controllers;
 import com.api.attornatus.dtos.PessoaDto;
 import com.api.attornatus.models.EnderecoModel;
 import com.api.attornatus.models.PessoaModel;
+import com.api.attornatus.services.EnderecoService;
 import com.api.attornatus.services.PessoaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +20,11 @@ import java.util.UUID;
 @RequestMapping("/pessoa")
 public class PessoaController {
     final PessoaService pessoaService;
+    final EnderecoService enderecoService;
 
-    public PessoaController(PessoaService pessoaService){
+    public PessoaController(PessoaService pessoaService, EnderecoService enderecoService){
         this.pessoaService = pessoaService;
+        this.enderecoService = enderecoService;
     }
 
     @PostMapping
@@ -48,9 +51,31 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaModelOptional.get());
     }
 
-    @GetMapping("/{id}/enderecos")
-    public ResponseEntity<List<EnderecoModel>> getAllEnderecosPessoa(@PathVariable(value = "id") UUID pessoaId){
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.enderecosPessoa(pessoaId));
+    @GetMapping("/{pessoaId}/enderecos")
+    public ResponseEntity<List<EnderecoModel>> getAllEnderecosPessoa(@PathVariable(value = "pessoaId") UUID pessoaId){
+        var pessoaModel = pessoaService.findById(pessoaId).get();
+
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaModel.getEnderecos());
+    }
+
+    @GetMapping("/{pessoaId}/principalEnd")
+    public ResponseEntity<Object> getPrincipalEndereco(@PathVariable(value = "pessoaId") UUID pessoaId){
+        Optional<PessoaModel> pessoaModelOptional = pessoaService.findById(pessoaId);
+
+        if(!pessoaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada");
+        }
+
+        List<EnderecoModel> listEnderecos = pessoaModelOptional.get().getEnderecos();
+        EnderecoModel enderecoPrincipal = new EnderecoModel();
+
+        for(EnderecoModel enderecoModel : listEnderecos){
+            if(enderecoModel.getPrincipal()){
+                enderecoPrincipal = enderecoModel;
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(enderecoPrincipal);
     }
 
     @DeleteMapping("/{id}")
