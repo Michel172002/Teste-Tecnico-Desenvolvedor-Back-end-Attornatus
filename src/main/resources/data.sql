@@ -1,0 +1,2 @@
+INSERT INTO tb_pessoa (`id`, `nascimento`, `nome`) VALUES ('31000000-0000-0000-0000-000000000000', '2002-09-17', 'Erick Michel Rodrigues Silva')
+INSERT INTO tb_endereco(`id`, `cep`, `cidade`, `logradouro`, `numero`, `principal`, `pessoa_id`) VALUES ('32000000-0000-0000-0000-000000000000', '98460048', 'canoinhas', 'Fra ncisco de Paula Pereira', '67', true, '31000000-0000-0000-0000-000000000000')
